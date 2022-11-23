@@ -1,0 +1,12 @@
+[alias]
+  all = add *
+  br  = rev-parse --abbrev-ref HEAD
+  ls = status
+  cd  = checkout
+  fucked = reset --soft origin/master
+  rb = rebase -i origin/master
+  pf = push --force
+
+[core]
+	excludesfile = /home/david/.gitignore
+

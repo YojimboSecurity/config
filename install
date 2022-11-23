@@ -1,20 +1,75 @@
 #!/usr/bin/env bash
 # Link config files
 
+FORCE=false
+
 lunarVim(){
-    echo "Linking Lunar Vim config file" 
-    if [ ! -d "$HOME/.config/lvim" ]; then
-        mkdir -p "$HOME/.config/lvim"
+    local path="$HOME/.config/lvim"
+    local fullPath="$path/config.lua"
+
+    if [ -L "$fullPath" ] && [ ! $FORCE ]; then
+        echo "already linked, nothing to do"
+        return
     fi
-    ln lvim/config.lua "$HOME/.config/lvim/"
+
+    # root dir may not exist yet. It this is the case then create it
+    if [ ! -d "$path" ]; then
+        mkdir -p "$path"
+    fi
+    
+    # can't link a file if it already exitsts
+    if [ -f "$fullPath" ]; then
+        rm -f "$fullPath" 2>/dev/null
+    fi
+
+    echo "linking lvim config"
+    ln lvim/config.lua "$path"
+}
+
+gitConfig(){
+    local fullPath="$HOME/.gitconfig"
+    if [ -L "$fullPath" ] && [ ! $FORCE ]; then
+        # file exists, is linked, and we don't want to force a new one, so we can quit
+        return
+    fi
+    # can't link a file if it already exitsts
+    if [ -f "$fullPath" ]; then
+        rm -f "$fullPath" 2>/dev/null
+    fi
+
+    ln .gitconfig "$HOME/"
+}
+
+gitIgnore(){
+    local fullPath="$HOME/.gitignore"
+    if [ -L "$fullPath" ] && [ ! $FORCE ]; then
+        # file exists, is linked, and we don't want to force a new one, so we can quit
+        return
+    fi
+    # can't link a file if it already exitsts
+    if [ -f "$fullPath" ]; then
+        rm -f "$fullPath" 2>/dev/null
+    fi
+
+    ln .gitignore "$HOME/"
 }
 
 main(){
     while [[ $# -gt 0 ]]; do
         case $1 in
+            -f|--foroce)
+                shift
+                FORCE=true
+                ;;
             lvim)
                 shift
                 lunarVim
+                exit 0
+                ;;
+            git)
+                shift
+                gitConfig
+                gitIgnore
                 exit 0
                 ;;
             *)
@@ -25,6 +80,8 @@ main(){
     done
     # No arguments given, link all
     lunarVim
+    gitConfig
+    gitIgnore
 }
 
 main "$@"

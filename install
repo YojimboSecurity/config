@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# Link config files
+
+lunarVim(){
+    echo "Linking Lunar Vim config file" 
+    if [ ! -d "$HOME/.config/lvim" ]; then
+        mkdir -p "$HOME/.config/lvim"
+    fi
+    ln lvim/config.lua "$HOME/.config/lvim/"
+}
+
+main(){
+    while [[ $# -gt 0 ]]; do
+        case $1 in
+            lvim)
+                shift
+                lunarVim
+                exit 0
+                ;;
+            *)
+                echo "$1 unknown"
+                exit 1
+                ;;
+            esac
+    done
+    # No arguments given, link all
+    lunarVim
+}
+
+main "$@"

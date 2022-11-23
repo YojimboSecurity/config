@@ -4,7 +4,7 @@
 main(){
     mkdir -p "$HOME/.config/lvim/"
     mkdir -p "$HOME/.config/nvim/"
-    mkfir -p "$HOME/.config/fish/"
+    mkdir -p "$HOME/.config/fish/"
     cp lvim/config.lua "$HOME/.config/lvim/"
     cp nvim/init.vim "$HOME/.config/nvim/"
     cp fish/config.fish "$HOME/.config/fish/"

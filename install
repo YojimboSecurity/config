@@ -1,15 +1,16 @@
 #!/usr/bin/env bash
 # Link config files
-
+SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 || exit 1 ; pwd -P )"
+echo $SCRIPTPATH
 main(){
     mkdir -p "$HOME/.config/lvim/"
     mkdir -p "$HOME/.config/nvim/"
     mkdir -p "$HOME/.config/fish/"
-    cp lvim/config.lua "$HOME/.config/lvim/"
-    cp nvim/init.vim "$HOME/.config/nvim/"
-    cp fish/config.fish "$HOME/.config/fish/"
-    cp .gitignore "$HOME/"
-    cp .gitconfig "$HOME/"
+    cp $SCRIPTPATH/lvim/config.lua "$HOME/.config/lvim/"
+    cp $SCRIPTPATH/nvim/init.vim "$HOME/.config/nvim/"
+    cp $SCRIPTPATH/fish/config.fish "$HOME/.config/fish/"
+    cp $SCRIPTPATH/.gitignore "$HOME/"
+    cp $SCRIPTPATH/.gitconfig "$HOME/"
 }
 
 main "$@"

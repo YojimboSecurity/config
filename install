@@ -3,14 +3,14 @@
 SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 || exit 1 ; pwd -P )"
 echo $SCRIPTPATH
 main(){
-    mkdir -p "$HOME/.config/lvim/"
-    mkdir -p "$HOME/.config/nvim/"
-    mkdir -p "$HOME/.config/fish/"
-    cp $SCRIPTPATH/lvim/config.lua "$HOME/.config/lvim/"
-    cp $SCRIPTPATH/nvim/init.vim "$HOME/.config/nvim/"
-    cp $SCRIPTPATH/fish/config.fish "$HOME/.config/fish/"
-    cp $SCRIPTPATH/.gitignore "$HOME/"
-    cp $SCRIPTPATH/.gitconfig "$HOME/"
+    for i in "$@"
+    do
+        if [ "$i" == "git" ]; then
+            cp $SCRIPTPATH/.git* "$HOME/"
+        fi
+        mkdir -p "$HOME/.config/$i"
+        cp $SCRIPTPATH/"$i"/* "$HOME/.config/$i/"
+    done
 }
 
 main "$@"
